@@ -213,7 +213,13 @@ def get_env_vars(
         else:
             continue
 
-        env[escape_env_var(f"{container_config.name}_HOST")] = gateway_ip
-        env[escape_env_var(f"{container_config.name}_{containerport}_PORT")] = hostport
+        host_var = container_config.hostname_variable or f"{container_config.name}_HOST"
+        port_var = container_config.port_variables.get(
+            containerport,
+            f"{container_config.name}_{containerport}_PORT",
+        )
+
+        env[escape_env_var(host_var)] = gateway_ip
+        env[escape_env_var(port_var)] = hostport
 
     return env

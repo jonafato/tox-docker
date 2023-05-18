@@ -132,6 +132,8 @@ class ContainerConfig:
         ports: Optional[Collection[Port]] = None,
         links: Optional[Collection[Link]] = None,
         volumes: Optional[Collection[Volume]] = None,
+        hostname_variable: Optional[str] = None,
+        port_variables: Optional[Mapping[str, str]] = None,
     ) -> None:
         self.name = name
         self.runas_name = runas_name(name)
@@ -157,3 +159,6 @@ class ContainerConfig:
         self.healthcheck_retries = healthcheck_retries
 
         self.runnable_image: Optional[DockerImage] = None
+
+        self.hostname_variable: Optional[str] = hostname_variable
+        self.port_variables: Optional[Mapping[str, str]] = port_variables or {}

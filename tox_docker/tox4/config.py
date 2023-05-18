@@ -104,6 +104,18 @@ class DockerConfigSet(ConfigSet):
             default=0,
             desc="docker healthcheck retry count",
         )
+        self.add_config(
+            keys=["hostname_variable"],
+            of_type=str,
+            default="",
+            desc="name of variable injected into other testenvs",
+        )
+        self.add_config(
+            keys=["port_variables"],
+            of_type=Dict[str, str],
+            default={},
+            desc="name of port variables injected into other testenvs",
+        )
 
 
 def parse_container_config(docker_config: DockerConfigSet) -> ContainerConfig:
@@ -132,4 +144,6 @@ def parse_container_config(docker_config: DockerConfigSet) -> ContainerConfig:
         ports=docker_config["ports"],
         links=docker_config["links"],
         volumes=docker_config["volumes"],
+        hostname_variable=docker_config["hostname_variable"],
+        port_variables=docker_config["port_variables"],
     )
